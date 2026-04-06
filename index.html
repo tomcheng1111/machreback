@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>系統跳轉中...</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; color: #666; }
+    </style>
+</head>
+<body>
+    <p>正在進入機台管理系統，請稍候...</p>
+    
+    <script>
+        // 1. 取得網址列的參數 (例如 ?mid=A001)
+        const params = window.location.search;
+        
+        // 2. 你的 Google Apps Script 原始網址
+        const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec";
+        
+        // 3. 組合完整網址並執行跳轉 (由前端 Location 直接切換，避開 iframe 限制)
+        window.location.href = gasBaseUrl + params;
+    </script>
+</body>
+</html>
