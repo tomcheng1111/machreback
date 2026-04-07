@@ -2,23 +2,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>系統跳轉中...</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; color: #666; }
+        body { font-family: -apple-system, sans-serif; text-align: center; padding-top: 100px; color: #333; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 2s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <p>正在進入機台管理系統，請稍候...</p>
+    <div class="loader"></div>
+    <p>正在連線至機台管理系統...</p>
+    <p style="font-size: 14px; color: #999;">若畫面未自動跳轉，請稍候片刻</p>
     
     <script>
-        // 1. 取得網址列的參數 (例如 ?mid=A001)
-        const params = window.location.search;
-        
-        // 2. 你的 Google Apps Script 原始網址
+        const params = new URLSearchParams(window.location.search);
         const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec";
         
-        // 3. 組合完整網址並執行跳轉 (由前端 Location 直接切換，避開 iframe 限制)
-        window.location.href = gasBaseUrl + params;
+        // 核心修正：加上 t=[時間戳記] 強迫 Safari 視為新請求，避開舊緩存
+        const timestamp = new Date().getTime();
+        params.set('t', timestamp);
+        
+        // 組合最終網址
+        const finalUrl = gasBaseUrl + "?" + params.toString();
+        
+        // 使用 replace 而非 href，這能讓 Safari 的「返回」按鈕邏輯更正常
+        window.location.replace(finalUrl);
     </script>
 </body>
 </html>
