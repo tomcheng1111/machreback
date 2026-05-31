@@ -17,7 +17,7 @@
     
     <script>
         const params = new URLSearchParams(window.location.search);
-        const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec";
+        const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec?v=new";
         
         // 核心修正：加上 t=[時間戳記] 強迫 Safari 視為新請求，避開舊緩存
         const timestamp = new Date().getTime();
