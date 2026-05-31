@@ -16,17 +16,20 @@
     <p style="font-size: 14px; color: #999;">若畫面未自動跳轉，請稍候片刻</p>
     
     <script>
+        // 1. 這裡放「最乾淨」的 GAS 網址 (不要帶任何 ? 或 &)
+        const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec";
+        
+        // 2. 抓取掃描 QR Code 帶進來的參數 (例如 mid=CNC-B017)
         const params = new URLSearchParams(window.location.search);
-        const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec?v=new";
         
-        // 核心修正：加上 t=[時間戳記] 強迫 Safari 視為新請求，避開舊緩存
-        const timestamp = new Date().getTime();
-        params.set('t', timestamp);
+        // 3. 把我們需要的系統參數塞進去
+        params.set('v', 'new'); // 指定開啟新版網頁
+        params.set('t', new Date().getTime()); // 加入時間戳記破除快取
         
-        // 組合最終網址
+        // 4. 自動組合完美網址 (URLSearchParams 會自動幫我們用 & 串接)
         const finalUrl = gasBaseUrl + "?" + params.toString();
         
-        // 使用 replace 而非 href，這能讓 Safari 的「返回」按鈕邏輯更正常
+        // 5. 無痕跳轉
         window.location.replace(finalUrl);
     </script>
 </body>
