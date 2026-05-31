@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>系統跳轉中...</title>
     <style>
         body { font-family: -apple-system, sans-serif; text-align: center; padding-top: 100px; color: #333; }
@@ -13,23 +16,20 @@
 <body>
     <div class="loader"></div>
     <p>正在連線至機台管理系統...</p>
-    <p style="font-size: 14px; color: #999;">若畫面未自動跳轉，請稍候片刻</p>
     
     <script>
-        // 1. 這裡放「最乾淨」的 GAS 網址 (不要帶任何 ? 或 &)
         const gasBaseUrl = "https://script.google.com/macros/s/AKfycbyJa_mkGBzdK1kuspVFa75CC3nROPD-XFtMSaI317uW91EFu24Pin0zygW-Mi43PIuUZA/exec";
         
-        // 2. 抓取掃描 QR Code 帶進來的參數 (例如 mid=CNC-B017)
+        // 抓取掃描 QR Code 帶進來的參數 (mid=CNC-A004)
         const params = new URLSearchParams(window.location.search);
         
-        // 3. 把我們需要的系統參數塞進去
-        params.set('v', 'new'); // 指定開啟新版網頁
-        params.set('t', new Date().getTime()); // 加入時間戳記破除快取
+        // 塞入系統參數
+        params.set('v', 'new'); 
+        params.set('t', new Date().getTime()); // 動態時間戳記破除快取
         
-        // 4. 自動組合完美網址 (URLSearchParams 會自動幫我們用 & 串接)
         const finalUrl = gasBaseUrl + "?" + params.toString();
         
-        // 5. 無痕跳轉
+        // 跳轉
         window.location.replace(finalUrl);
     </script>
 </body>
